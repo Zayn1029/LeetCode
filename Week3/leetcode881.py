@@ -1,16 +1,18 @@
-class Solution:
-    def minimumReplacement(self, nums):
-        n = len(nums)
-        if n <= 1:
-            return 0
-        
-        operations = 0
-
-        for i in range(n - 2, -1, -1):
-            if nums[i] <= nums[i + 1]:
-                continue
-            parts = (nums[i] + nums[i + 1] - 1) // nums[i + 1]
-            operations += parts - 1
-            nums[i] = nums[i] // parts
-        
-        return operations
+def numRescueBoats(people, limit):
+    # 按體重排序
+    people.sort()
+    
+    # 初始化雙指針
+    left, right = 0, len(people) - 1
+    boats = 0
+    
+    # 使用雙指針配對
+    while left <= right:
+        # 嘗試配對最輕和最重的人
+        if people[left] + people[right] <= limit:
+            left += 1  # 最輕的人可以與最重的人同船
+        # 無論是否配對成功，最重的人都會乘一艘船
+        right -= 1
+        boats += 1
+    
+    return boats
